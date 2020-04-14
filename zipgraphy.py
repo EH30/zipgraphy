@@ -4,22 +4,25 @@ import zipfile
 
 def check_zip(name):
     valid = ["zip", "rar"]
+    a = name[::-1]
     try:
-        if name[len(name)-3:] in valid:
+        if a[:3] in valid:
             return True
     except TypeError:
         print("[-]ERROR Type python -h for help")
         print("[+]File hiding Example: python python zipgraphy.py -z Secret_files.zip -p NormalImage.jpg -o hidden_in_Image.jpg")
-        print("[+]Extacting the hidden Files From Image Example: python zipgraphy.py -u hidden_in_Image -o /Desktop/Output_Folder")
+        print("[+]Extacting the hidden Files From Image Example: python zipgraphy.py -u hidden_in_Image")
 
     return False
 
 
 
 def getData(filename):
-    with zipfile.ZipFile(filename, "r") as zipped:
-        zipped.extractall()
-    
+    try:
+        with zipfile.ZipFile(filename, "r") as zipped:
+            zipped.extractall()
+    except zipfile.BadZipFile:
+        print("The File is not a zip file this script extracts zip file from image\nto extract rar file change the image.png or jpg to .rar then extract it with winrar or other software")
 
 
 def hideFile(image, zipped, output):
@@ -52,15 +55,15 @@ if __name__ == "__main__":
     
     try:
         if args.u != None and args.z == None and args.p == None and args.o == None:
-            getData(args.u, args.o) 
+            getData(args.u) 
         elif args.z != None and args.p != None and args.o != None and check_zip(args.z):
             hideFile(args.p, args.z, args.o)
         else:
             print("[-]ERROR Type python -h for help")
             print("[+]File hiding Example: python python zipgraphy.py -z Secret_files.zip -p NormalImage.jpg -o hidden_in_Image.jpg")
-            print("[+]Extacting the hidden Files From Image Example: python zipgraphy.py -u hidden_in_Image -o /Desktop/Output_Folder")
+            print("[+]Extacting the hidden Files From Image Example: python zipgraphy.py -u hidden_in_Image")
     
     except TabError:
         print("[-]ERROR Type python -h for help")
         print("[+]File hiding Example: python python zipgraphy.py -z Secret_files.zip -p NormalImage.jpg -o hidden_in_Image.jpg")
-        print("[+]Extacting the hidden Files From Image Example: python zipgraphy.py -u hidden_in_Image -o /Desktop/Output_Folder")
+        print("[+]Extacting the hidden Files From Image Example: python zipgraphy.py -u hidden_in_Image")
