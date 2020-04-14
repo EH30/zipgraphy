@@ -4,10 +4,19 @@ import zipfile
 
 def check_zip(name):
     valid = ["zip", "rar"]
-    a = name[::-1]
     try:
-        if a[:3] in valid:
+        st = ""
+        count = 0
+        for x in range(len(name)):
+            if count == 1:
+                st += name[x]
+            
+            if name[x] == ".":
+                count = 1
+        
+        if st.strip() in valid:
             return True
+
     except TypeError:
         print("[-]ERROR Type python -h for help")
         print("[+]File hiding Example: python python zipgraphy.py -z Secret_files.zip -p NormalImage.jpg -o hidden_in_Image.jpg")
@@ -20,10 +29,11 @@ def check_zip(name):
 def getData(filename):
     try:
         with zipfile.ZipFile(filename, "r") as zipped:
+            zipped.printdir()
             zipped.extractall()
     except zipfile.BadZipFile:
-        print("The File is not a zip file this script extracts zip file from image\nto extract rar file change the image.png or jpg to .rar then extract it with winrar or other software")
-
+        print("The File is not a zip file this script extracts zip file from image\nto extract thie file try changing the .png or .jpg to .rar then extract it with other software")
+    
 
 def hideFile(image, zipped, output):
     opnr_image = open(image, "rb")
@@ -41,7 +51,9 @@ def hideFile(image, zipped, output):
 
 
 
+
 if __name__ == "__main__":
+
     parser = argparse.ArgumentParser(description="""You're Files must be zipped    
     [+]File hiding Example: python python zipgraphy.py -z Secret_files.zip -p NormalImage.jpg -o hidden_in_Image.jpg    
     [+]Extacting the hidden Files From Image Example: python zipgraphy.py -u hidden_in_Image""")
@@ -49,10 +61,8 @@ if __name__ == "__main__":
     parser.add_argument("-p", type=str, help="Enter You're Image Example: Image.jpg")
     parser.add_argument("-u", type=str, help="Enter You're the image that has hidden files Example: hidden_in_Image.jpg")
     parser.add_argument("-o", type=str, help="Enter You're OutPut File Name Example: hidden_in_Image.jpg")
-    
     args = parser.parse_args()
 
-    
     try:
         if args.u != None and args.z == None and args.p == None and args.o == None:
             getData(args.u) 
@@ -63,7 +73,7 @@ if __name__ == "__main__":
             print("[+]File hiding Example: python python zipgraphy.py -z Secret_files.zip -p NormalImage.jpg -o hidden_in_Image.jpg")
             print("[+]Extacting the hidden Files From Image Example: python zipgraphy.py -u hidden_in_Image")
     
-    except TabError:
+    except TypeError as error:
         print("[-]ERROR Type python -h for help")
         print("[+]File hiding Example: python python zipgraphy.py -z Secret_files.zip -p NormalImage.jpg -o hidden_in_Image.jpg")
         print("[+]Extacting the hidden Files From Image Example: python zipgraphy.py -u hidden_in_Image")
