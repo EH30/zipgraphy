@@ -2,6 +2,8 @@ import argparse
 import zipfile
 
 
+#Created By: EH
+
 def check_zip(name):
     valid = ["zip", "rar"]
     try:
