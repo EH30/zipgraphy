@@ -1,0 +1,2 @@
+# zipgraphy
+Simple Steganography script 
